@@ -21,10 +21,10 @@ function databaseConnection() {
             yield mongoose_1.default.connect(config_1.default.database_url);
             console.log('Database is connected successfully.');
             app_1.default.listen(config_1.default.port, () => {
-                console.log(`Bookself buddy server is listening on port ${config_1.default.port}`);
+                console.log(`Boobuddy server is listening on port ${config_1.default.port}`);
             });
             app_1.default.get("/", (req, res) => {
-                res.send("This project is running successfully");
+                res.send("This project is running");
             });
         }
         catch (error) {

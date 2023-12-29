@@ -8,10 +8,10 @@ async function databaseConnection() {
         await mongoose.connect(config.database_url as string);
         console.log('Database is connected successfully.');
         app.listen(config.port, () => {
-            console.log(`Bookself buddy server is listening on port ${config.port}`)
+            console.log(`Boobuddy server is listening on port ${config.port}`)
           })
           app.get("/", (req, res) => {
-            res.send("This project is running successfully");
+            res.send("This project is running");
           });
     }catch(error){
         console.log(error);
