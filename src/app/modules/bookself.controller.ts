@@ -8,12 +8,13 @@ import {
   createBookToDB,
   createUserToDB,
   getBooksFromDB,
+  getLoggedInUserFromDB,
   getSpecificBookFromDB,
   getUsersFromDB,
 } from './bookself.service';
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    const data = req.body; 
+    const {data} = req.body; 
     const user = await createUserToDB(data);
     res.status(200).json({
         status: 'success',
@@ -22,7 +23,8 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 }
 
 export const createBooks = async (req: Request, res: Response, next: NextFunction) => {
-    const data = req.body;
+    const {data} = req.body;
+    console.log(data);
     const user = await createBookToDB(data);
     res.status(200).json({
         status: 'success',
@@ -34,20 +36,34 @@ export const createBooks = async (req: Request, res: Response, next: NextFunctio
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     const user = await getUsersFromDB();
     console.log(user);
-    console.log('hello');
     res.status(200).json({
         status: 'success',
         data: user
     })
 }
 
+export const getLoggedInUsers = async (req: Request, res: Response, next: NextFunction) => {
+    const {email, password} = req.body;
+    const user = await getLoggedInUserFromDB(email, password);
+    if(user?.email === email && user?.password === password){
+        res.status(200).json({
+            status: 'success',
+            data: user
+        })
+    }else{
+        res.status(400).json({
+            status: 'failed',
+            data: null
+        })
+    }
+}
+
 export const getBooks = async (req: Request, res: Response, next: NextFunction) => {
-    const user = await getBooksFromDB();
-    console.log(user);
+    const books = await getBooksFromDB();
     console.log('hello');
     res.status(200).json({
         status: 'success',
-        data: user
+        data: books
     })
 }
 // Getting particular book by Id
