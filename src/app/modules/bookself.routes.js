@@ -18,4 +18,5 @@ router.get("/get-book/:id", bookself_controller_1.getSpecificBookById);
 router.delete("/delete-book/:deleteId", bookself_controller_1.deleteBoookAccordingToId);
 // !Routes for the update operation
 router.put("/update-book/:id", bookself_controller_1.updateBoookAccordingToId);
+router.put("/add-comment/:bookId", bookself_controller_1.addCommentToBook);
 exports.default = router;

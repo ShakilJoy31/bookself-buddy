@@ -5,6 +5,7 @@ import {
 } from 'express';
 
 import {
+  addCommentToBookDB,
   createBookToDB,
   createUserToDB,
   deleteSpecificBookFromDB,
@@ -178,6 +179,30 @@ export const updateBoookAccordingToId = async (
     const updatedData = req.body
     const book = await updateSpecificBookFromDB(id, updatedData)
     console.log(book);
+    res.status(200).json({
+      status: 'success',
+      data: book
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
+}
+
+
+
+export const addCommentToBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { bookId } = req.params;
+    const commentData = req.body
+    console.log(bookId, commentData);
+    const book = await addCommentToBookDB(bookId, commentData)
     res.status(200).json({
       status: 'success',
       data: book

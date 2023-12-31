@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateSpecificBookFromDB = exports.deleteSpecificBookFromDB = exports.getSpecificBookFromDB = exports.getBooksFromDB = exports.getLoggedInUserFromDB = exports.getUsersFromDB = exports.createBookToDB = exports.createUserToDB = void 0;
+exports.addCommentToBookDB = exports.updateSpecificBookFromDB = exports.deleteSpecificBookFromDB = exports.getSpecificBookFromDB = exports.getBooksFromDB = exports.getLoggedInUserFromDB = exports.getUsersFromDB = exports.createBookToDB = exports.createUserToDB = void 0;
 const bookself_model_1 = __importDefault(require("./bookself.model"));
 const newbook_model_1 = __importDefault(require("./newbook.model"));
 const createUserToDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -112,3 +112,13 @@ const updateSpecificBookFromDB = (bookId, updatedBookData) => __awaiter(void 0, 
     }
 });
 exports.updateSpecificBookFromDB = updateSpecificBookFromDB;
+const addCommentToBookDB = (bookId, commentData) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updatedBook = yield newbook_model_1.default.findOneAndUpdate({ _id: bookId }, { $push: { comments: commentData } }, { returnOriginal: false });
+        return updatedBook;
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.addCommentToBookDB = addCommentToBookDB;

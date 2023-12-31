@@ -25,16 +25,18 @@ const reviewSchema = new Schema<IReview>({
 });
 
 const commentSchema = new Schema<IComment>({
-    userId: {
+    commentId: {
         type: Number,
     },
-    commentAndRating: {
+    name: {
         type: Schema.Types.Mixed,
     },
-    timeOfComment: {
+    comment: {
         type: String,
     },
-    reviews: [reviewSchema]
+    commentTime: {
+        type: String
+    }
 });
 
 const newBookSchema = new Schema<INewBook>({

@@ -16,16 +16,18 @@ const reviewSchema = new mongoose_1.Schema({
     }
 });
 const commentSchema = new mongoose_1.Schema({
-    userId: {
+    commentId: {
         type: Number,
     },
-    commentAndRating: {
+    name: {
         type: mongoose_1.Schema.Types.Mixed,
     },
-    timeOfComment: {
+    comment: {
         type: String,
     },
-    reviews: [reviewSchema]
+    commentTime: {
+        type: String
+    }
 });
 const newBookSchema = new mongoose_1.Schema({
     title: {

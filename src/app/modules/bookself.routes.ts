@@ -1,6 +1,7 @@
 import express from 'express';
 
 import {
+  addCommentToBook,
   createBooks,
   createUser,
   deleteBoookAccordingToId,
@@ -28,5 +29,7 @@ router.delete("/delete-book/:deleteId", deleteBoookAccordingToId);
 
 // !Routes for the update operation
 router.put("/update-book/:id", updateBoookAccordingToId);
+
+router.put("/add-comment/:bookId", addCommentToBook);
 
 export default router;

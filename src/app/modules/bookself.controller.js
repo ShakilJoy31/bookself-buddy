@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBoookAccordingToId = exports.deleteBoookAccordingToId = exports.getSpecificBookById = exports.getBooks = exports.getLoggedInUsers = exports.getUsers = exports.createBooks = exports.createUser = void 0;
+exports.addCommentToBook = exports.updateBoookAccordingToId = exports.deleteBoookAccordingToId = exports.getSpecificBookById = exports.getBooks = exports.getLoggedInUsers = exports.getUsers = exports.createBooks = exports.createUser = void 0;
 const bookself_service_1 = require("./bookself.service");
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -160,3 +160,22 @@ const updateBoookAccordingToId = (req, res, next) => __awaiter(void 0, void 0, v
     }
 });
 exports.updateBoookAccordingToId = updateBoookAccordingToId;
+const addCommentToBook = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { bookId } = req.params;
+        const commentData = req.body;
+        console.log(bookId, commentData);
+        const book = yield (0, bookself_service_1.addCommentToBookDB)(bookId, commentData);
+        res.status(200).json({
+            status: 'success',
+            data: book
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            status: 'error',
+            data: error
+        });
+    }
+});
+exports.addCommentToBook = addCommentToBook;

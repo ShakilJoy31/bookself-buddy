@@ -1,6 +1,9 @@
 import { IUser } from './bookelf.interface';
 import User from './bookself.model';
-import { INewBook } from './newbook.interface';
+import {
+  IComment,
+  INewBook,
+} from './newbook.interface';
 import Book from './newbook.model';
 
 export const createUserToDB = async (payload: IUser): Promise<IUser> => {
@@ -105,5 +108,23 @@ export const deleteSpecificBookFromDB = async (
       throw error;
     }
   };
+  
+  
+  export const addCommentToBookDB = async (
+    bookId: string,
+    commentData: Partial<IComment>
+  ): Promise<INewBook | null> => {
+    try {
+      const updatedBook = await Book.findOneAndUpdate(
+        { _id: bookId },
+        { $push: { comments: commentData } },
+        { returnOriginal: false }
+      );
+      return updatedBook;
+    } catch (error) {
+      throw error;
+    }
+};
+
   
   
