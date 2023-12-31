@@ -120,7 +120,7 @@ export const deleteSpecificBookFromDB = async (
         { $push: { comments: commentData } },
         { returnOriginal: false }
       );
-      return updatedBook;
+      return updatedBook; 
     } catch (error) {
       throw error;
     }
