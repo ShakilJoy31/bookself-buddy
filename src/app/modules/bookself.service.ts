@@ -121,7 +121,7 @@ export const deleteSpecificBookFromDB = async (
         { returnOriginal: false }
       );
       return updatedBook;
-    } catch (error) {
+    } catch (error) { 
       throw error;
     }
 };
