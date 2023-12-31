@@ -13,77 +13,133 @@ import {
   getUsersFromDB,
 } from './bookself.service';
 
-export const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    const {data} = req.body; 
-    const user = await createUserToDB(data);
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { data } = req.body
+    const user = await createUserToDB(data)
     res.status(200).json({
-        status: 'success',
-        data: user
+      status: 'success',
+      data: user
     })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
 }
 
-export const createBooks = async (req: Request, res: Response, next: NextFunction) => {
-    const {data} = req.body;
-    console.log(data);
-    const user = await createBookToDB(data);
+export const createBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { data } = req.body
+    console.log(data)
+    const user = await createBookToDB(data)
     res.status(200).json({
-        status: 'success',
-        data: user
+      status: 'success',
+      data: user
     })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
 }
 
-
-export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
-    const user = await getUsersFromDB();
-    console.log(user);
+export const getUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await getUsersFromDB()
+    console.log(user)
     res.status(200).json({
-        status: 'success',
-        data: user
+      status: 'success',
+      data: user
     })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
 }
 
-export const getLoggedInUsers = async (req: Request, res: Response, next: NextFunction) => {
-    const {email, password} = req.body;
-    const user = await getLoggedInUserFromDB(email, password);
-    if(user?.email === email && user?.password === password){
-        res.status(200).json({
-            status: 'success',
-            data: user
-        })
-    }else{
-        res.status(400).json({
-            status: 'failed',
-            data: null
-        })
+export const getLoggedInUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, password } = req.body
+    const user = await getLoggedInUserFromDB(email, password)
+    if (user?.email === email && user?.password === password) {
+      res.status(200).json({
+        status: 'success',
+        data: user
+      })
+    } else {
+      res.status(400).json({
+        status: 'failed',
+        data: null
+      })
     }
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
 }
 
-export const getBooks = async (req: Request, res: Response, next: NextFunction) => {
-    const books = await getBooksFromDB();
-    console.log('hello');
+export const getBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const books = await getBooksFromDB()
+    console.log('hello')
     res.status(200).json({
-        status: 'success',
-        data: books
+      status: 'success',
+      data: books
     })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
 }
 // Getting particular book by Id
-export const getSpecificBookById = async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params;
-  const book = await getSpecificBookFromDB(id);
+export const getSpecificBookById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params
+    const book = await getSpecificBookFromDB(id)
     res.status(200).json({
-        status: 'success',
-        data: book
+      status: 'success',
+      data: book
     })
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      data: error
+    })
+  }
 }
-
-
-
-
-
-
-
-
-
 
 // import cors from 'cors';
 // import dotenv from 'dotenv';
@@ -144,7 +200,6 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   res.send(result);
 // });
 
-
 // app.post("/userInfoForPlacedProduct", async (req, res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -168,7 +223,7 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 //   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  
+
 //   const PAGE_SIZE = 5;
 //   try {
 //     const distinctCategories = await userCollection.aggregate([
@@ -189,18 +244,16 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   }
 // });
 
-
-
 // // Products for specific category.....
 // app.get("/get-products", async (req, res) => {
 //     res.setHeader("Access-Control-Allow-Origin", "*");
 //     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 //     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  
+
 //     const PAGE_SIZE = 20;
 //     let page = parseInt(req.query.page) || 1;
 //     let skip = (page - 1) * PAGE_SIZE;
-  
+
 //     try {
 //       let category = req.query.category;
 //       const query = category ? { category: category } : {}; // Update query structure here
@@ -214,9 +267,6 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //       res.status(500).send("Error fetching products"); // Sending an error message with status code
 //     }
 //   });
-  
-
-
 
 // app.get("/get-product/:productId", async (req, res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -236,8 +286,6 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   }
 // });
 
-
-
 // app.get("/get-orders", async (req, res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -247,14 +295,12 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   res.send(result);
 // });
 
-
-
-// // Product Delete 
+// // Product Delete
 // app.delete("/deleteProduct/:productId", async (req, res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 //   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  
+
 //   const { productId } = req.params;
 //   try {
 //     const result = await placedProducts.deleteOne({_id: new ObjectId(productId)});
@@ -268,12 +314,11 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   }
 // });
 
-
 // app.delete("/deleteProductByAdmin/:productId", async (req, res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 //   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  
+
 //   const { productId } = req.params;
 //   try {
 //     const result = await userCollection.deleteOne({_id: new ObjectId(productId)});
@@ -287,8 +332,6 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   }
 // });
 
-
-
 // // Put request
 // app.put("/update-user", async (req, res) => {
 //   const { userId } = req.query;
@@ -299,7 +342,6 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //   const result = await placedProducts.deleteOne({ _id: ObjectId(productId) });
 //   res.send(result);
 // });
-
 
 // app.put("/accepted-order-by-admin/:productId", async (req, res) => {
 //   const { productId } = req.params;
@@ -318,7 +360,6 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //     res.status(500).send({ error: 'Failed to update your product.' });
 //   }
 // });
-
 
 // app.put("/edit-product/:productId", async (req, res) => {
 //   const { productId } = req.params;
@@ -339,7 +380,7 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 // });
 
 // function getCurrentDateTime() {
-//   const currentDate = new Date(); 
+//   const currentDate = new Date();
 //   return currentDate.toLocaleString();
 // }
 // // Comment for a particular product....
@@ -375,12 +416,12 @@ export const getSpecificBookById = async (req: Request, res: Response, next: Nex
 //     const { toolId } = req.params;
 //     const { repliedCommentId, reviewerName, reviewerComment, reviewTime } = req.body;
 //     const tool = await userCollection.findOneAndUpdate(
-//       { 
+//       {
 //         _id: new ObjectId(toolId),
 //         "comments.userId": repliedCommentId
 //       },
-//       { 
-//         $push: { 
+//       {
+//         $push: {
 //           "comments.$.reviews": { repliedCommentId, reviewerName,reviewerComment,  reviewTime } // Update the matched comment
 //         }
 //       },
