@@ -3,10 +3,12 @@ import express from 'express';
 import {
   createBooks,
   createUser,
+  deleteBoookAccordingToId,
   getBooks,
   getLoggedInUsers,
   getSpecificBookById,
   getUsers,
+  updateBoookAccordingToId,
 } from './bookself.controller';
 
 const router = express.Router();
@@ -20,5 +22,11 @@ router.post("/get-loggedin-user", getLoggedInUsers);
 router.post("/create-new-book", createBooks);
 router.get("/get-books", getBooks);
 router.get("/get-book/:id", getSpecificBookById);
+
+// !Routes for the delete operation 
+router.delete("/delete-book/:deleteId", deleteBoookAccordingToId);
+
+// !Routes for the update operation
+router.put("/update-book/:id", updateBoookAccordingToId);
 
 export default router;

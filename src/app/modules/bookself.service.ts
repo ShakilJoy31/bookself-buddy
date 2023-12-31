@@ -67,3 +67,43 @@ export const getSpecificBookFromDB = async (
     throw error
   }
 }
+
+
+export const deleteSpecificBookFromDB = async (
+    payload: string
+  ): Promise<string> => {
+    try {
+      const result = await Book.deleteOne({ _id: payload });
+      if (result.deletedCount && result.deletedCount > 0) {
+        return 'Book deleted successfully';
+      } else {
+        return 'Book delation failed';
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+  export const updateSpecificBookFromDB = async (
+    bookId: string,
+    updatedBookData: Partial<INewBook>
+  ): Promise<string> => {
+    try {
+      const updatedBook = await Book.findOneAndUpdate(
+        { _id: bookId },
+        { $set: updatedBookData },
+        { new: true }
+      );
+  
+      if (updatedBook) {
+        return 'Book updated successfully';
+      } else {
+        return 'Book update failed';
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  
